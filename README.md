@@ -116,4 +116,20 @@ A sample wind rose can be seen below.
 
 ![Sample wind rose.](WindRose_M5_2010.PNG)
 
-
+This function is used to get monthly data for each location per year. The resulting values are stored a list which will later be used in a dataframe, this list is returned. The use of the data here is for creating a graph illustrating the average monthly atmospheric pressure for each location. The graph is displayed in another function
+```python
+def get_monthly_data(yearly_df, year, averge_ap_data):
+    
+    for month in unique_months:
+        #Check to make sure data exists for current location ID during current year and current month
+        if ((yearly_df['Year'] == year) & (yearly_df['Month'] == month)).any():
+            #Create DataFrame for current year
+            monthly_df = yearly_df.loc[yearly_df['Month'] == month]
+            #Calculate average atmospheric pressure rounded to 2 decimal places
+            average_ap = np.around(np.average(monthly_df['AtmosphericPressure'].values),2)
+            #Append data to average atmospheric pressure data list
+            averge_ap_data.append([year,month,average_ap])
+            
+    return averge_ap_data 
+    
+```
