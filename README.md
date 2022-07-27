@@ -3,6 +3,18 @@ Using the technology of your choice: - Save the provided data-set into a databas
 
 For this project I decided to use the Python programming language as I felt this was the best choice because of the capabilities of python in data presentation. Python is widely used in artificial intelligence with multiple libraries that could help with the data provided. One such library that I was keen to use was Pandas which allows users to create dataframes from sources such as the csv files provided. Another such library that would be very useful for this project is Seaborn which is a data visualisation tool that uses matplotlib, another useful library. The next decision that had to be made was the database that would be used. For this I decided on using MySQL as I had previous expierence using this application. As the data provided relates to wind and atmospheric pressure data, I researched how best to display the information. I discovered that the information provided could be used to create a wind rose, which also had a python library, this was called WindRoseAxes.
 
+Imports required
+```python
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+import mysql.connector as db  
+from windrose import WindroseAxes
+from pandas.api.types import CategoricalDtype
+import numpy as np
+
+```
+
 Firstly I established connection to the database
 
 ```python
