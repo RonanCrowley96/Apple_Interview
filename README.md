@@ -213,3 +213,7 @@ def line_plot(dataframes):
         plt.show()     
     
 ```
+
+A sample lineplot can be seen below.
+
+![Sample Lineplot.](lineplot.PNG)
