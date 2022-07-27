@@ -78,6 +78,28 @@ This function acts as the initial function for the data, here columns are added 
         line_plot(dataframes)
     
 ```
+This function cycles through each year the location is in use, while also checking to make sure data exists. From here the wind speed and wind direction values are calculated by calling the wind data function before being passed to the wind rose function to be displayed. The average atmospheric pressure per month is also calculated before being retured here, this is used in another function where another graph is produced.
+```python
+def get_yearly_data(location_df, l_id, average_speed_data):
+    
+    #Initialising average atmospheric pressure array
+    average_ap_data = []
+    for year in unique_years:
+        #Check to make sure data exists for current location ID during current year
+        if ((location_df['locationID'] == l_id) & (location_df['Year'] == year)).any():
+            #Create DataFrame for current year
+            yearly_df = location_df.loc[location_df['Year'] == year]
+            
+            ws, wd, wg, average_speed_data = get_wind_data(yearly_df, year, average_speed_data, l_id)
+            
+            if print_windrose:
+                wind_rose(wd, ws, l_id, year)
+                
+            average_ap_data = get_monthly_data(yearly_df, year, average_ap_data)
+            
+    return average_ap_data
+    
+```
 This function extracts the wind speed, wind direction and wind gust values that will be used in calculations such as the wind rose. Average speeds are also calculated that will be used to compare yearly average wind speeds between locations. The calculated values are returned
 ```python
 def get_wind_data(yearly_df, year, average_speed_data, l_id):
@@ -168,6 +190,26 @@ def heat_map(location_name,pivot_df):
     plt.show()   
     
 ```
+
 A sample heatmap can be seen below.
 
 ![Sample Heat Map.](heatmap.PNG)
+
+
+This function takes the dataframes for average wind speeds and average gust speeds. Note these dataframes have been pivoted for the lineplot graph. A simple for loop is used to avoid repeating code for displaying each graph and corresponding title.
+
+```python
+def line_plot(dataframes):
+
+    titles = ['Average Wind Speed in Knots (kn) Per Year','Average Gust in Knots (kn) Per Year']
+    #Set Seaborn grid type
+    for i in range(0,len(dataframes)):    
+        sns.set_style('darkgrid')
+        filename = 'images\\' + titles[i] + '.PNG'
+        #Create lineplot
+        sns.lineplot(data = dataframes[i])
+        plt.title(titles[i])                 
+        plt.savefig(filename)
+        plt.show()     
+    
+```
