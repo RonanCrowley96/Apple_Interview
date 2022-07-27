@@ -226,6 +226,6 @@ def line_plot(dataframes):
     
 ```
 
-A sample lineplot can be seen below. From this lineplot, it can be observed that 
+A sample lineplot can be seen below. From this lineplot, it can be observed that not every location is active for every year represented in the data-set
 
 ![Sample Lineplot.](lineplot.PNG)
