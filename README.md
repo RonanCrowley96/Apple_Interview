@@ -1,7 +1,7 @@
 # Apple_Interview
-Using the technology of your choice: - Save the provided data-set into a database - Show / visualise the data 
+Using the technology of your choice: - Save the provided data-set into a database - Show / visualise the data.
 
-For this project I decided to use the Python programming language as I felt this was the best choice because of the capabilities of python in data presentation. Python is widely used in artificial intelligence with multiple libraries that could help with the data provided. One such library that I was keen to use was Pandas which allows users to create dataframes from sources such as the csv files provided. Another such library that would be very useful for this project is Seaborn which is a data visualisation tool that uses matplotlib, another useful library. The next decision that had to be made was the database that would be used. For this I decided on using MySQL as I had previous expierence using this application. As the data provided relates to wind and atmospheric pressure data, I researched how best to display the information. I discovered that the information provided could be used to create a wind rose, which also had a python library, this was called WindRoseAxes.
+For this project, I decided to use the Python programming language as I felt this was the best choice because of the capabilities of python in data presentation. Python is widely used in artificial intelligence, with multiple libraries that could help with the data provided. One such library that I was keen to use was Pandas, which allows users to create dataframes from sources such as the csv files provided. Another such library that would be very useful for this project is Seaborn which is a data visualisation tool that uses matplotlib, another useful library. The next decision that had to be made was the database that would be used. For this I decided on using MySQL as I had previous experience using this application. As the data provided relates to wind and atmospheric pressure data, I researched how best to display the information. I discovered that the information provided could be used to create a wind rose, which also had a python library, this was called WindRoseAxes.
 
 Imports required
 ```python
@@ -90,7 +90,7 @@ This function acts as the initial function for the data, here columns are added 
         line_plot(dataframes)
     
 ```
-This function cycles through each year the location is in use, while also checking to make sure data exists. From here the wind speed and wind direction values are calculated by calling the wind data function before being passed to the wind rose function to be displayed. The average atmospheric pressure per month is also calculated before being retured here, this is used in another function where another graph is produced.
+This function cycles through each year the location is in use, while also checking to make sure data exists. From here the wind speed and wind direction values are calculated by calling the wind data function before being passed to the wind rose function to be displayed. The average atmospheric pressure per month is also calculated before being returned here, this is used in another function where another graph is produced.
 ```python
 def get_yearly_data(location_df, l_id, average_speed_data):
     
@@ -112,7 +112,7 @@ def get_yearly_data(location_df, l_id, average_speed_data):
     return average_ap_data
     
 ```
-This function extracts the wind speed, wind direction and wind gust values that will be used in calculations such as the wind rose. Average speeds are also calculated that will be used to compare yearly average wind speeds between locations. The calculated values are returned
+This function extracts the wind speed, wind direction and wind gust values that will be used in calculations such as the wind rose. Average speeds are also calculated that will be used to compare yearly average wind speeds between locations. The calculated values are returned.
 ```python
 def get_wind_data(yearly_df, year, average_speed_data, l_id):
     
@@ -132,7 +132,7 @@ def get_wind_data(yearly_df, year, average_speed_data, l_id):
     return ws, wd, wg, average_speed_data
     
 ```
-This function creates the wind rose using ws and wd which were returned in the previous function. The resulting graph is labeled and saved to the images folder
+This function creates the wind rose using ws and wd which were returned in the previous function. The resulting graph is labelled and saved to the images folder.
 ```python
 def wind_rose(wd, ws, l_id, year):
     
@@ -150,7 +150,7 @@ A sample wind rose can be seen below.
 
 ![Sample wind rose.](WindRose_M5_2010.PNG)
 
-This function is used to get monthly data for each location per year. The resulting values are stored a list which will later be used in a dataframe, this list is returned. The use of the data here is for creating a graph illustrating the average monthly atmospheric pressure for each location. The graph is displayed in another function
+This function is used to get monthly data for each location per year. The resulting values are stored a list which will later be used in a dataframe, this list is returned. The use of the data here is for creating a graph illustrating the average monthly atmospheric pressure for each location. The graph is displayed in another function.
 ```python
 def get_monthly_data(yearly_df, year, averge_ap_data):
     
@@ -167,7 +167,7 @@ def get_monthly_data(yearly_df, year, averge_ap_data):
     return averge_ap_data 
     
 ```
-This function takes the list returned in the previous function, creates a dataframe before pivoting the table so that the data can be used in the desired plot. After pivoting any NaN values are replaced with 0s. the resulting dataframe is returned
+This function takes the list returned in the previous function, creates a dataframe before pivoting the table so that the data can be used in the desired plot. After pivoting any NaN values are replaced with 0s. the resulting dataframe is returned.
 ```python
 def atmospheric_pressure_data(l_id,average_ap_data,df):
  
