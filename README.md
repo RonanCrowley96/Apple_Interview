@@ -226,6 +226,53 @@ def line_plot(dataframes):
     
 ```
 
-A sample lineplot can be seen below. From this lineplot, it can be observed that not every location is active for every year represented in the data-set
+A sample lineplot can be seen below. From this lineplot, it can be observed that not every location is active for every year represented in the data-set. 
 
 ![Sample Lineplot.](lineplot.PNG)
+
+Here the data-set is initially read from the csv files. The data is updated and a merged dataframe is created.These are sent to the database. Some global variables are set that will be used in other functions, these include unique fields and some settings for disabling certain graphs, these settings are largely used for testing. The fields in the merged dataset that should be numeric e.g wind speed are set to be numeric by a pandas function.
+
+```python
+if __name__=="__main__":
+    
+    #Loads csv data into DataFrame
+    locationData_csv = pd.read_csv (r'C:\Users\35387\OneDrive\Desktop\Apple Interview\locationData.csv',dtype='unicode')
+    locationMap_csv = pd.read_csv (r'C:\Users\35387\OneDrive\Desktop\Apple Interview\locationMap.csv',dtype='unicode')
+    
+    data_df = pd.DataFrame(locationData_csv)
+    data_df = data_df.iloc[1:,:]
+    map_df = pd.DataFrame(locationMap_csv)
+ 
+    data_df.fillna(method='bfill', inplace=True)
+    data_df['time'] = pd.to_datetime(data_df["time"], format="%Y-%m-%dT%H:%M:%SZ")
+    
+    mergedLocation_Data = pd.merge(data_df, map_df, on='locationID', how='outer')
+    mergedLocation_Data = mergedLocation_Data.iloc[1:,:]
+    mergedLocation_Data = mergedLocation_Data[['locationID', 'locationName','time', 'AtmosphericPressure', 'WindDirection', 'WindSpeed', 'Gust']]
+    
+    database_entry(data_df,map_df,mergedLocation_Data)  
+
+    month_cat = ['January','February','March','April','May','June','July','August','September','October','November','December']
+    cat_type = CategoricalDtype(categories=month_cat, ordered=True)
+    
+    mergedLocation_Data['Year'] = pd.DatetimeIndex(mergedLocation_Data['time']).year
+    mergedLocation_Data['Month'] = mergedLocation_Data['time'].dt.month_name()
+    
+    global unique_locations, unique_years, unique_months,print_windrose, print_graphs, display_to_console
+    
+    unique_locations = mergedLocation_Data['locationID'].unique()
+    unique_years = mergedLocation_Data['Year'].unique()
+    unique_months = mergedLocation_Data['Month'].unique()
+    
+    print_windrose= True
+    print_graphs = True
+
+    
+    #Initialising average speed list
+    average_speed_data = []
+    
+    mergedLocation_Data[['WindSpeed','Gust', 'AtmosphericPressure','WindDirection']] = mergedLocation_Data[["WindSpeed", "Gust", 'AtmosphericPressure','WindDirection']].apply(pd.to_numeric)
+    
+    # data_function(mergedLocation_Data,map_df)   
+    
+```
