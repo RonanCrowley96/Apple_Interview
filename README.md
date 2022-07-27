@@ -226,6 +226,6 @@ def line_plot(dataframes):
     
 ```
 
-A sample lineplot can be seen below.
+A sample lineplot can be seen below. From this lineplot, it can be observed that 
 
 ![Sample Lineplot.](lineplot.PNG)
