@@ -113,4 +113,4 @@ def wind_rose(wd, ws, l_id, year):
     
 ```
 Sample wind rose.
-![alt text](https://github.com/[username]/[reponame]/blob/[branch]/image.jpg?raw=true)
+![alt text](https://github.com/RonanCrowley96/Apple_Interview/blob/master/WindRose_M5_2010.PNG?raw=true)
