@@ -168,3 +168,6 @@ def heat_map(location_name,pivot_df):
     plt.show()   
     
 ```
+A sample heatmap can be seen below.
+
+![Sample Heat Map.](Graph_Average Atmospheric Pressure For - Bantry.PNG)
