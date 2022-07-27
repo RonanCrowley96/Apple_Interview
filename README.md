@@ -273,6 +273,6 @@ if __name__=="__main__":
     
     mergedLocation_Data[['WindSpeed','Gust', 'AtmosphericPressure','WindDirection']] = mergedLocation_Data[["WindSpeed", "Gust", 'AtmosphericPressure','WindDirection']].apply(pd.to_numeric)
     
-    # data_function(mergedLocation_Data,map_df)   
+    data_function(mergedLocation_Data,map_df)   
     
 ```
