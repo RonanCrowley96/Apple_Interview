@@ -230,7 +230,7 @@ A sample lineplot can be seen below. From this lineplot, it can be observed that
 
 ![Sample Lineplot.](lineplot.PNG)
 
-Here the data-set is initially read from the csv files. The data is updated and a merged dataframe is created.These are sent to the database. Some global variables are set that will be used in other functions, these include unique fields and some settings for disabling certain graphs, these settings are largely used for testing. The fields in the merged dataset that should be numeric e.g wind speed are set to be numeric by a pandas function.
+Here the data-set is initially read from the csv files. The data is updated and a merged dataframe is created.These are sent to the database. Initially the data is imported as unicode but will be changed at a later stage. Some global variables are set that will be used in other functions, these include unique fields and some settings for disabling certain graphs, these settings are largely used for testing. The fields in the merged dataset that should be numeric e.g wind speed are set to be numeric by a pandas function.
 
 ```python
 if __name__=="__main__":
