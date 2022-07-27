@@ -112,3 +112,5 @@ def wind_rose(wd, ws, l_id, year):
     plt.show()   
     
 ```
+Sample wind rose.
+![alt text](https://github.com/[username]/[reponame]/blob/[branch]/image.jpg?raw=true)
