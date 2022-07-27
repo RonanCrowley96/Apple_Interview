@@ -8,9 +8,36 @@ As the data provided relates to wind and atmospheric pressure data, I researched
 First I began by establishing a connection to the database so that I could create tables and add data. To do this I used another python library provided by MySQL called mysql.connector.
 
 ```python
-connection_to_db = db.connect(user='apple_interview', password='luna123',
+    connection_to_db = db.connect(user='apple_interview', password='luna123',
                                   host='localhost',
                                   database='apple_interview')
 
-cursor = connection_to_db.cursor()
+    cursor = connection_to_db.cursor()
 ```
+With connection established I was easily able to add data to the database.
+
+```python
+    cursor.execute('''
+                        CREATE TABLE IF NOT EXISTS location_merged (
+                            locationID nvarchar(50), 
+                            locationName nvarchar(50),
+                            time nvarchar(50),
+                            atmospheric_pressure int,
+                            wind_direction int,
+                            wind_speed decimal(8,4),
+                            gust decimal(8,4),
+                            primary key (locationID, time)                          
+                            )
+                        ''')   
+   
+    #Create query variable 
+    sql_query = ' REPLACE INTO location_merged (locationID, locationName, time, atmospheric_pressure, wind_direction, wind_speed, gust) VALUES (%s,%s,%s,%s,%s,%s,%s)'
+    
+    #Loop through DataFrame while executing query with DataFrame values    
+    for row in mergedLocation_Data.itertuples():
+          cursor.execute(sql_query,(row.locationID,row.locationName,row.time,row.AtmosphericPressure,row.WindDirection,row.WindSpeed,row.Gust,))     
+          
+    #Commit changes made       
+    connection_to_db.commit()
+    ```
+Three tables were created, two for each of the original csv files and a third for a merged table to display all data in one table.
