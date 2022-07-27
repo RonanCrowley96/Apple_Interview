@@ -112,5 +112,8 @@ def wind_rose(wd, ws, l_id, year):
     plt.show()   
     
 ```
-Sample wind rose.
-!Sample wind rose.(WindRose_M5_2010.png)
+A sample wind rose can be seen below.
+
+![Sample wind rose.](WindRose_M5_2010.PNG)
+
+
