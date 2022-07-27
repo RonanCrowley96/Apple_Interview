@@ -47,7 +47,7 @@ Before finally adding the data-set to the database
 ```
 This function acts as the initial function for the data, here columns are added for month and year that will make later operations easier. A for loop is used here to cycle through each location. Checks are also made to ensure some data exists for the station in order to avoid unnecessary operations. Calls to other functions are made to get data for other functions and graphs. 
 ```python
-    def data_function(df,map_df): 
+ def data_function(df,map_df): 
     
     #Adding columns for year and month to the DataFrame
     df['Year'] = pd.DatetimeIndex(df['time']).year
@@ -78,4 +78,37 @@ This function acts as the initial function for the data, here columns are added 
         line_plot(dataframes)
     
 ```
-
+This function extracts the wind speed, wind direction and wind gust values that will be used in calculations such as the wind rose. Average speeds are also calculated that will be used to compare yearly average wind speeds between locations. The calculated values are returned
+```python
+def get_wind_data(yearly_df, year, average_speed_data, l_id):
+    
+    #Extract all values for wind speed, wind direction and gust for current location id and year.
+    ws = yearly_df['WindSpeed'].values       
+    wd = yearly_df['WindDirection'].values         
+    wg = yearly_df['Gust'].values
+    
+    #Calculate average speeds rounded to 2 decimal places
+    average_wind_speed = np.around(np.average(ws),decimals = 2)
+    average_gust_speed = np.around(np.average(wg),decimals = 2)
+    
+    #Append data to average speed data list
+    average_speed_data.append([year,l_id,average_wind_speed,average_gust_speed])
+     
+    #Return wind related values
+    return ws, wd, wg, average_speed_data
+    
+```
+This function creates the wind rose using ws and wd which were returned in the previous function. The resulting graph is labeled and saved to the images folder
+```python
+def wind_rose(wd, ws, l_id, year):
+    
+    #Create and show Wind Rose Graph
+    ax = WindroseAxes.from_ax()
+    ax.bar(wd, ws, normed=True, opening=0.8, edgecolor='white')
+    unit = str(l_id) + '_' + str(year)
+    filename = 'images\WindRose_' + unit + '.PNG'
+    ax.set_legend(units = unit)
+    plt.savefig(filename)
+    plt.show()   
+    
+```
