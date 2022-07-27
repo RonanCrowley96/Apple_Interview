@@ -133,3 +133,38 @@ def get_monthly_data(yearly_df, year, averge_ap_data):
     return averge_ap_data 
     
 ```
+This function takes the list returned in the previous function, creates a dataframe before pivoting the table so that the data can be used in the desired plot. After pivoting any NaN values are replaced with 0s. the resulting dataframe is returned
+```python
+def atmospheric_pressure_data(l_id,average_ap_data,df):
+ 
+    #Create DataFrame for atmospheric pressure
+    atmospheric_pressure_df = pd.DataFrame(average_ap_data,columns=('Year','Month','Avg_Atmospheric_Pressure'))   
+    #Replace blank and NaN entries with 0s  
+    #Update category of Month column
+    atmospheric_pressure_df['Month'] = atmospheric_pressure_df['Month'].astype(cat_type) 
+    pivot_df = atmospheric_pressure_df.pivot('Month','Year','Avg_Atmospheric_Pressure')  
+    #Replace blank and NaN entries with 0s 
+    pivot_df.fillna(0, inplace=True)   
+
+    return pivot_df 
+    
+```
+This function takes the previous dataframe and passes it to seaborn to create a heatmap. The minimum value is set by taking the lowest value for each individual location. To better display the heatmap the figure size and font sized have been changed.
+```python
+def heat_map(location_name,pivot_df):    
+    #Set Seaborn grid type
+    sns.set_style('darkgrid')    
+    #Title of graph
+    title = 'Average Atmospheric Pressure For - ' + location_name
+    filename = 'images\\Graph_' + title + '.PNG'
+    plt.title(title)
+    #Update the sizing of the Seaborn graph
+    sns.set(rc = {'figure.figsize':(15,8)})
+    #Set min value to that of the min value of the data
+    min_for_location = pivot_df.mask(pivot_df==0).min().min()
+    #Plot heatmap with new DataFrame, updated minimum and other settings
+    sns.heatmap(pivot_df, vmin= min_for_location,vmax=1025, fmt='.2f',annot=True, cmap='Reds',annot_kws={"fontsize":8})        
+    plt.savefig(filename)
+    plt.show()   
+    
+```
